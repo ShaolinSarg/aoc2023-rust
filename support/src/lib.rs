@@ -1,6 +1,6 @@
 use std::fs;
 
-fn read_input_file_as_lines(path: &str) -> Vec<String> {
+pub fn read_input_file_as_lines(path: &str) -> Vec<String> {
     fs::read_to_string(path)
         .unwrap()
         .lines()
