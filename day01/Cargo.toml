@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 support = { path = "../support" }
+
+regex = "1.10.2"
