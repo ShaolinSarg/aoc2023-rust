@@ -1,10 +1,18 @@
 use regex::Regex;
 use support::read_input_file_as_lines;
 
-pub fn day01_part1_answer() -> String {
-    // let input_lines = read_input_file_as_lines("resource/day01_input");
-    let input_lines = read_input_file_as_lines("day01/resource/day01_input");
+pub fn day01_part1_answer(path: &str) -> String {
+    let input_lines = read_input_file_as_lines(path);
     let answer = total_inputs(input_lines);
+
+    format!("{}", answer)
+}
+
+pub fn day01_part2_answer(path: &str) -> String {
+    let input_lines = read_input_file_as_lines(path);
+    let processed_lines = input_lines.iter().map(|l| pre_process_line(l)).collect();
+
+    let answer = total_inputs(processed_lines);
 
     format!("{}", answer)
 }
@@ -36,7 +44,6 @@ fn total_inputs(lines: Vec<String>) -> i32 {
 
 fn pre_process_line(line: &str) -> String {
     let replacements: Vec<(&str, &str)> = vec![
-        ("zero", "0"),
         ("one", "1"),
         ("two", "2"),
         ("three", "3"),
@@ -47,18 +54,16 @@ fn pre_process_line(line: &str) -> String {
         ("eight", "8"),
         ("nine", "9"),
     ];
-    
-    line.chars()
-        .into_iter()
-        .fold(String::new(), (acc, c) {
-            
-        })
 
-    replacements
-        .iter()
-        .fold(String::from(line), |acc, (word, value)| {
-            acc.replace(word, value)
-        })
+    line.chars().fold(String::new(), |acc, c| {
+        let new = format!("{}{}", acc, c);
+
+        replacements
+            .iter()
+            .fold(new, |replaced_acc, (word, value)| {
+                replaced_acc.replace(word, value)
+            })
+    })
 }
 
 #[cfg(test)]
@@ -103,5 +108,31 @@ mod tests {
         assert_eq!("49872", pre_process_line("4nineeightseven2"));
         assert_eq!("z1ight234", pre_process_line("zoneight234"));
         assert_eq!("7pqrst6teen", pre_process_line("7pqrstsixteen"));
+        assert_eq!("8tkbtzjz698", pre_process_line("eighttkbtzjz6nineeight"));
+    }
+
+    #[test]
+    fn test_second_part_totals() {
+        let inp: Vec<String> = vec![
+            String::from("219"),
+            String::from("8wo3"),
+            String::from("abc123xyz"),
+            String::from("x2ne34"),
+            String::from("49872"),
+            String::from("z1ight234"),
+            String::from("7pqrst6teen"),
+        ];
+
+        assert_eq!(281, total_inputs(inp));
+    }
+
+    #[test]
+    fn test_first_answer() {
+        assert_eq!("55130", day01_part1_answer("resource/day01_input"));
+    }
+
+    #[test]
+    fn test_second_answer() {
+        assert_eq!("54978", day01_part2_answer("resource/day01_input"));
     }
 }
