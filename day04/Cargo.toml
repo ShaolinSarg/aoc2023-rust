@@ -1,11 +1,11 @@
 [package]
-name = "answers"
+name = "day04"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-day01 = { path = "../day01" }
-day04 = { path = "../day04" }
+support = { path = "../support" }
 
+regex = "1.10.2"
