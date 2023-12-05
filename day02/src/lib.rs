@@ -1,26 +1,47 @@
+mod parser;
+
+use std::{str::FromStr, collections::HashMap};
+
 use support::read_input_file_as_lines;
 
-pub fn day02_part1_answer(path: &str) -> String {
-    let input_lines = read_input_file_as_lines(path);
+#[derive(PartialEq, Eq, Debug, Hash)]
+enum Colour {
+    Blue,
+    Green,
+    Red,
+}
 
+impl FromStr for Colour {
+    type Err = ();
+
+    fn from_str(input: &str) -> Result<Colour, Self::Err> {
+        match input {
+            "blue" => Ok(Colour::Blue),
+            "green" => Ok(Colour::Green),
+            "red" => Ok(Colour::Red),
+            _ => Err(()),
+        }
+    }
+}
+
+#[derive(PartialEq, Eq, Debug)]
+struct Game {
+    id: u8,
+    draws: Vec<HashMap<Colour, u8>>
+}
+
+pub fn day02_part1_answer(path: &str) -> String {
     format!("{}", "")
 }
 
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    // use super::*;
 
-    // "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
-    // "Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue"
-    // "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red"
-    // "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red"
-    // "Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"
-
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+    // #[test]
+    // fn parse_game_id_should_return_the_game_id() {
+    //     let result = Ok(("", 1));
+    //     assert_eq!(result, parse_game_id("Game 1:"));
+    // }
 }

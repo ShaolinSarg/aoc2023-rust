@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 support = { path = "../support" }
+
+nom = "7.1.3"
