@@ -11,12 +11,12 @@ use nom::{
 
 use crate::{Colour, Game};
 
-fn parse_game_id(input: &str) -> IResult<&str, u8> {
+fn parse_game_id(input: &str) -> IResult<&str, u32> {
     let (i, _) = tag("Game ")(input)?;
     let (i, game_id) = digit1(i)?;
     let (i, _) = tag(": ")(i)?;
 
-    Ok((i, game_id.parse::<u8>().unwrap()))
+    Ok((i, game_id.parse::<u32>().unwrap()))
 }
 
 fn parse_colour_draw(input: &str) -> IResult<&str, (Colour, u8)> {
@@ -46,7 +46,7 @@ fn parse_multi_draws(input: &str) -> IResult<&str, Vec<HashMap<Colour, u8>>> {
 
     Ok((i, all_draws))
 }
-fn parse_game(input: &str) -> IResult<&str, Game> {
+pub fn parse_game(input: &str) -> IResult<&str, Game> {
     let (i, (id, draws)) = (parse_game_id, parse_multi_draws).parse(input)?;
 
     Ok((i, Game { id, draws }))
@@ -134,7 +134,8 @@ mod tests {
             parse_game(game_2_input)
         );
 
-        let game_3_input ="Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red";
+        let game_3_input =
+            "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red";
         assert_eq!(
             Ok((
                 "",
@@ -144,8 +145,8 @@ mod tests {
                         HashMap::from([(Colour::Blue, 6), (Colour::Red, 20), (Colour::Green, 8)]),
                         HashMap::from([(Colour::Blue, 5), (Colour::Red, 4), (Colour::Green, 13)]),
                         HashMap::from([(Colour::Red, 1), (Colour::Green, 5)])
-                        ]
-                    }
+                    ]
+                }
             )),
             parse_game(game_3_input)
         );
