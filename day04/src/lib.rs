@@ -1,11 +1,15 @@
 use regex::Regex;
-use support::read_input_file_as_lines;
 use std::collections::HashSet;
+use support::read_input_file_as_lines;
 
 pub fn day04_part1_answer(path: &str) -> String {
     let input_lines = read_input_file_as_lines(path);
 
-    let answer :i32 = input_lines.iter().map(|l| group_numbers(l)).map(|c| calculate_points(c)).sum();
+    let answer: i32 = input_lines
+        .iter()
+        .map(|l| group_numbers(l))
+        .map(|c| calculate_points(c))
+        .sum();
 
     format!("{}", answer)
 }
@@ -37,16 +41,15 @@ fn group_numbers(line: &str) -> (HashSet<i32>, HashSet<i32>) {
     (winners, our_numbers)
 }
 
-fn calculate_points((winning, our_numbers):(HashSet<i32>, HashSet<i32>)) -> i32 {
+fn calculate_points((winning, our_numbers): (HashSet<i32>, HashSet<i32>)) -> i32 {
     let our_winners = our_numbers.intersection(&winning).count() as u32;
     let base: i32 = 2;
 
     if our_winners == 0 {
         0
     } else {
-        base.pow(our_winners-1)
+        base.pow(our_winners - 1)
     }
-
 }
 
 #[cfg(test)]
@@ -60,7 +63,7 @@ mod tests {
         let line = "Card 1: 41 48 83 86 17 | 83 86 6  31 17  9 48 53";
         let expected: (HashSet<i32>, HashSet<i32>) = (
             HashSet::from([41, 48, 83, 86, 17]),
-            HashSet::from([83, 86, 6, 31, 17, 9, 48, 53])
+            HashSet::from([83, 86, 6, 31, 17, 9, 48, 53]),
         );
 
         assert_eq!(expected, group_numbers(line));
@@ -70,9 +73,8 @@ mod tests {
     fn calculate_points_should_return_the_points_on_a_card() {
         let card_numbers: (HashSet<i32>, HashSet<i32>) = (
             HashSet::from([41, 48, 83, 86, 17]),
-            HashSet::from([83, 86, 6, 31, 17, 9, 48, 53])
+            HashSet::from([83, 86, 6, 31, 17, 9, 48, 53]),
         );
-        
 
         assert_eq!(8, calculate_points(card_numbers));
     }
@@ -81,5 +83,4 @@ mod tests {
     fn test_first_answer() {
         assert_eq!("13", day04_part1_answer("resource/day04_small"));
     }
-    
 }

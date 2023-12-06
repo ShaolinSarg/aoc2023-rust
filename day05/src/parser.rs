@@ -1,4 +1,4 @@
-use std::{collections::HashSet, vec};
+use std::collections::HashSet;
 
 use nom::{
     bytes::complete::tag,
@@ -11,16 +11,16 @@ use nom::{
 
 use crate::RawMapping;
 
-fn parse_seeds(input: &str) -> IResult<&str, HashSet<u32>> {
+fn parse_seeds(input: &str) -> IResult<&str, HashSet<u64>> {
     let (i, _) = tag("seeds: ")(input)?;
-    let (i, numbers) = separated_list1(space1, map_res(digit1, |s: &str| s.parse::<u32>()))(i)?;
+    let (i, numbers) = separated_list1(space1, map_res(digit1, |s: &str| s.parse::<u64>()))(i)?;
     let (i, _) = newline(i)?;
 
     Ok((i, numbers.into_iter().collect()))
 }
 
-fn parse_mapping_number(input: &str) -> IResult<&str, u32> {
-    let (rem, number) = map_res(digit1, |s: &str| s.parse::<u32>())(input)?;
+fn parse_mapping_number(input: &str) -> IResult<&str, u64> {
+    let (rem, number) = map_res(digit1, |s: &str| s.parse::<u64>())(input)?;
     Ok((rem, number))
 }
 
@@ -49,14 +49,14 @@ pub fn parse_input(
 ) -> IResult<
     &str,
     (
-        HashSet<u32>,
+        HashSet<u64>,
         Vec<RawMapping>,
         Vec<RawMapping>,
         Vec<RawMapping>,
         Vec<RawMapping>,
         Vec<RawMapping>,
         Vec<RawMapping>,
-        Vec<RawMapping>
+        Vec<RawMapping>,
     ),
 > {
     let (rem, seeds) = parse_seeds(input)?;
@@ -85,7 +85,7 @@ pub fn parse_input(
             water_to_light_map,
             light_to_temp_map,
             temp_to_humidity_map,
-            humidity_to_locn_map
+            humidity_to_locn_map,
         ),
     ))
 }
@@ -130,10 +130,7 @@ mod tests {
                 "",
                 (
                     HashSet::from([79, 14, 55, 13]),
-                    vec![
-                        RawMapping::new(50, 98, 2), 
-                        RawMapping::new(52, 50, 48)
-                    ],
+                    vec![RawMapping::new(50, 98, 2), RawMapping::new(52, 50, 48)],
                     vec![
                         RawMapping::new(0, 15, 37),
                         RawMapping::new(37, 52, 2),
@@ -145,23 +142,14 @@ mod tests {
                         RawMapping::new(42, 0, 7),
                         RawMapping::new(57, 7, 4)
                     ],
-                    vec![
-                        RawMapping::new(88, 18, 7), 
-                        RawMapping::new(18, 25, 70)
-                    ],
+                    vec![RawMapping::new(88, 18, 7), RawMapping::new(18, 25, 70)],
                     vec![
                         RawMapping::new(45, 77, 23),
                         RawMapping::new(81, 45, 19),
                         RawMapping::new(68, 64, 13)
                     ],
-                    vec![
-                        RawMapping::new(0, 69, 1), 
-                        RawMapping::new(1, 0, 69)
-                    ],
-                    vec![
-                        RawMapping::new(60, 56, 37),
-                        RawMapping::new(56, 93, 4)
-                    ]
+                    vec![RawMapping::new(0, 69, 1), RawMapping::new(1, 0, 69)],
+                    vec![RawMapping::new(60, 56, 37), RawMapping::new(56, 93, 4)]
                 )
             )),
             parse_input(&input)

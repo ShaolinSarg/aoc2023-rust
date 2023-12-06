@@ -2,6 +2,7 @@ use day01::{day01_part1_answer, day01_part2_answer};
 use day02::day02_part1_answer;
 use day03::day03_part1_answer;
 use day04::day04_part1_answer;
+use day05::day05_part1_answer;
 
 fn main() {
     println!(
@@ -26,5 +27,10 @@ fn main() {
     println!(
         "the answer to day 4 part 1 is: {}",
         day04_part1_answer("day04/resource/day04_input")
+    );
+
+    println!(
+        "the answer to day 5 part 1 is: {}",
+        day05_part1_answer("day05/resource/input")
     );
 }
