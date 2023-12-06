@@ -22,10 +22,9 @@ fn main() {
         "the answer to day 3 part 1 is: {}",
         day03_part1_answer("day03/resource/day03_input")
     );
-    
+
     println!(
         "the answer to day 4 part 1 is: {}",
         day04_part1_answer("day04/resource/day04_input")
     );
-
 }
