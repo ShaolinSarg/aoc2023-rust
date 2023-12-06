@@ -8,13 +8,14 @@ pub struct RawMapping {
 }
 impl RawMapping {
     fn new(d: u32, s: u32, l: u32) -> Self {
-        RawMapping {dest_start: d, source_start: s, range_length: l}
+        RawMapping {
+            dest_start: d,
+            source_start: s,
+            range_length: l
+        }
     }
 }
 
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
 
 #[cfg(test)]
 mod tests {

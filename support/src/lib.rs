@@ -1,8 +1,7 @@
 use std::fs;
 
 pub fn read_input_file_as_string(path: &str) -> String {
-    fs::read_to_string(path)
-        .unwrap()
+    fs::read_to_string(path).unwrap()
 }
 
 pub fn read_input_file_as_lines(path: &str) -> Vec<String> {
