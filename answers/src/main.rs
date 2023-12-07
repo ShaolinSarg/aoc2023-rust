@@ -8,11 +8,11 @@ use day06::{day06_part1_answer, day06_part2_answer};
 fn main() {
     println!(
         "the answer to day 1 part 1 is: {}",
-        day01_part1_answer("day01/resource/day01_input")
+        day01_part1_answer("day01/resource/input")
     );
     println!(
         "the answer to day 1 part 2 is: {}",
-        day01_part2_answer("day01/resource/day01_input")
+        day01_part2_answer("day01/resource/input")
     );
 
     println!(
@@ -34,15 +34,8 @@ fn main() {
         "the answer to day 5 part 1 is: {}",
         day05_part1_answer("day05/resource/input")
     );
-    
-    println!(
-        "the answer to day 6 part 1 is: {}",
-        day06_part1_answer()
-    );
 
-    println!(
-        "the answer to day 6 part 2 is: {}",
-        day06_part2_answer()
-    );
+    println!("the answer to day 6 part 1 is: {}", day06_part1_answer());
 
+    println!("the answer to day 6 part 2 is: {}", day06_part2_answer());
 }

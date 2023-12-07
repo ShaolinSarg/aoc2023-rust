@@ -16,15 +16,18 @@ pub fn day05_part1_answer(path: &str) -> String {
         humid_to_locn,
     ) = parse_input(&input).unwrap().1;
 
-    let locations: Vec<u64> = seeds.iter().map(|&s| {
-        let soil = map_ranges(s, &seed_to_soil);
-        let fert = map_ranges(soil, &soil_to_fert);
-        let water = map_ranges(fert, &fert_to_water);
-        let light = map_ranges(water, &water_to_light);
-        let temp = map_ranges(light, &light_to_temp);
-        let hum = map_ranges(temp, &temp_to_humid);
-        map_ranges(hum, &humid_to_locn)
-    }).collect();
+    let locations: Vec<u64> = seeds
+        .iter()
+        .map(|&s| {
+            let soil = map_ranges(s, &seed_to_soil);
+            let fert = map_ranges(soil, &soil_to_fert);
+            let water = map_ranges(fert, &fert_to_water);
+            let light = map_ranges(water, &water_to_light);
+            let temp = map_ranges(light, &light_to_temp);
+            let hum = map_ranges(temp, &temp_to_humid);
+            map_ranges(hum, &humid_to_locn)
+        })
+        .collect();
 
     let answer = locations.iter().min().unwrap();
 
@@ -60,7 +63,7 @@ fn map_range(key: u64, mapping: &RawMapping) -> Option<u64> {
     }
 }
 
-fn map_ranges(key: u64, mappings: &Vec<RawMapping>) -> u64 {
+fn map_ranges(key: u64, mappings: &[RawMapping]) -> u64 {
     mappings
         .iter()
         .find_map(|m| map_range(key, m))
@@ -83,7 +86,6 @@ mod tests {
 
     #[test]
     fn map_ranges_should_return_mapped_key() {
-
         let mappings = vec![RawMapping::new(50, 98, 2), RawMapping::new(52, 50, 48)];
 
         assert_eq!(81, map_ranges(79, &mappings));

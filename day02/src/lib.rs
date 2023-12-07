@@ -33,7 +33,7 @@ pub fn day02_part1_answer(path: &str) -> String {
     let input_lines = read_input_file_as_lines(path);
     let games = input_lines.iter().map(|g| parser::parse_game(g).unwrap().1);
 
-    let valid_games = games.into_iter().filter(|g| game_is_valid(g));
+    let valid_games = games.into_iter().filter(game_is_valid);
 
     let answer: u32 = valid_games.map(|g| g.id).sum();
 
@@ -41,7 +41,7 @@ pub fn day02_part1_answer(path: &str) -> String {
 }
 
 fn game_is_valid(game: &Game) -> bool {
-    game.draws.iter().all(|d| is_valid_colour(d))
+    game.draws.iter().all(is_valid_colour)
 }
 
 fn is_valid_colour(draws: &HashMap<Colour, u8>) -> bool {

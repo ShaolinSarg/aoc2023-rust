@@ -8,7 +8,7 @@ pub fn day04_part1_answer(path: &str) -> String {
     let answer: i32 = input_lines
         .iter()
         .map(|l| group_numbers(l))
-        .map(|c| calculate_points(c))
+        .map(calculate_points)
         .sum();
 
     format!("{}", answer)
