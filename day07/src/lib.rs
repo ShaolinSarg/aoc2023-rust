@@ -219,6 +219,14 @@ impl Ord for Hand {
     }
 }
 
+pub fn day07_part1_answer(path: &str) -> String {
+    let input = support::read_input_file_as_lines(path);
+
+    let answer = calculate_winnings(input);
+
+    format!("{}", answer)
+}
+
 fn order_games(mut games: Vec<Game>) -> Vec<(usize, Game)> {
     games.sort();
 
@@ -233,9 +241,7 @@ fn calculate_winnings(input: Vec<String>) -> u32 {
 
     order_games(games)
         .iter()
-        .map(|(rank, game)| {
-            *rank as u32 * game.bid
-        })
+        .map(|(rank, game)| *rank as u32 * game.bid)
         .sum()
 }
 
